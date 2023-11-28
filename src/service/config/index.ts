@@ -10,4 +10,4 @@ if (import.meta.env.MODE === 'production') {
 console.log(BASE_URL)
 
 export const TIME_OUT = 10000
-export {BASE_URL}
+export { BASE_URL }

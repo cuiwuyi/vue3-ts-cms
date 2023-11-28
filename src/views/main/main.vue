@@ -1,15 +1,13 @@
 <template>
-  <div class='main'>
+  <div class="main">
     <h2>main</h2>
   </div>
 </template>
 
-<script setup lang='ts'>
+<script setup lang="ts"></script>
 
-</script>
-
-<style lang='less' scoped>
-.main{
+<style lang="less" scoped>
+.main {
   color: red;
 }
 </style>
