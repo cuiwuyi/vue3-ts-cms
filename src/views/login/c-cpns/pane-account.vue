@@ -24,8 +24,14 @@ import type { FormRules, ElForm } from 'element-plus'
 import { ElMessage } from 'element-plus'
 import { accountLoginRequest } from '../../../service/login/login.ts'
 import useLoginStore from '../../../store/login/login.ts'
+import type { IAccount } from '../../../types'
 
-const account = reactive({
+interface IAccount {
+  name: string
+  password: string
+}
+
+const account = reactive<IAccount>({
   name: '',
   password: ''
 })

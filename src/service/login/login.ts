@@ -1,8 +1,9 @@
 import hyRequest from '../index.ts'
+import { IAccount } from '../../types'
 
-export function accountLoginRequest(account: any) {
+export function accountLoginRequest(account: IAccount) {
   return hyRequest.post({
     url: '/login',
-    date: account
+    data: account
   })
 }
