@@ -6,6 +6,7 @@
       label-width="60px"
       size="large"
       status-icon
+      ref="formRef"
     >
       <el-form-item label="账号" prop="name">
         <el-input v-model="account.name" />
@@ -18,8 +19,9 @@
 </template>
 
 <script setup lang="ts">
-import { reactive } from 'vue'
-import { FormRules } from 'element-plus'
+import { reactive, ref } from 'vue'
+import type { FormRules, ElForm } from 'element-plus'
+import { ElMessage } from 'element-plus'
 
 const account = reactive({
   name: '',
@@ -30,7 +32,7 @@ const accountRules: FormRules = {
   name: [
     { required: true, message: '*必须输入账号信息', trigger: 'blur' },
     {
-      pattern: /^[a-z0-9]{3-16}$/,
+      pattern: /^[a-z0-9]{3, 16}$/,
       message: '*必须是3-16位长度',
       trigger: 'blur'
     }
@@ -38,19 +40,22 @@ const accountRules: FormRules = {
   password: [
     { required: true, message: '*必须输入密码', trigger: 'blur' },
     {
-      pattern: /^[a-z0-9]{3-16}$/,
+      pattern: /^[a-z0-9]{3, 16}$/,
       message: '*必须是3-16位长度',
       trigger: 'blur'
     }
   ]
 }
 
+const formRef = ref<InstanceType<typeof ElForm>>()
 function loginAction() {
-  console.log(
-    'pane-account login action function exection',
-    account.name,
-    account.password
-  )
+  formRef.value?.validate((valid) => {
+    if (valid) {
+      console.log('验证成功')
+    } else {
+      ElMessage.error('Oops,请输入正确账号信息或密码')
+    }
+  })
 }
 defineExpose({
   loginAction

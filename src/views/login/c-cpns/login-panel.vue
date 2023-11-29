@@ -42,7 +42,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { Iphone, PhoneFilled, UserFilled } from '@element-plus/icons-vue'
+import { Iphone, UserFilled } from '@element-plus/icons-vue'
 import PaneAccount from './pane-account.vue'
 import PanePhone from './pane-phone.vue'
 
