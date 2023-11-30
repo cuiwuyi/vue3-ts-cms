@@ -17,6 +17,7 @@
 <script setup lang="ts"></script>
 <style scoped lang="less">
 .pane-phone {
+  color: red;
 }
 
 .verify-code {
