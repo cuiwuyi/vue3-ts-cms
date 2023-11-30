@@ -7,3 +7,7 @@ export function accountLoginRequest(account: IAccount) {
     data: account
   })
 }
+
+export function ABC{
+
+}
