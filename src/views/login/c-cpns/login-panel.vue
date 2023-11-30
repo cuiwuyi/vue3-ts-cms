@@ -41,18 +41,24 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import { Iphone, UserFilled } from '@element-plus/icons-vue'
 import PaneAccount from './pane-account.vue'
 import PanePhone from './pane-phone.vue'
+import { localCache } from '../../../utils/cache.ts'
 
 const activeName = ref('account')
-const isRememberPassword = ref(false)
+const isRememberPassword = ref(
+  localCache.getCache('isRememberPassword') ?? false
+)
+watch(isRememberPassword, (newValue) => {
+  localCache.setCache('isRememberPassword', newValue)
+})
 const accountRef = ref<InstanceType<typeof PaneAccount>>()
 
 function handleLoginBtnClick() {
   if (activeName.value === 'account') {
-    accountRef.value?.loginAction()
+    accountRef.value?.loginAction(isRememberPassword.value)
   } else {
     console.log('Phone Login')
   }

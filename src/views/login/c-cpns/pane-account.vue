@@ -25,15 +25,14 @@ import { ElMessage } from 'element-plus'
 import { accountLoginRequest } from '../../../service/login/login.ts'
 import useLoginStore from '../../../store/login/login.ts'
 import type { IAccount } from '../../../types'
+import { localCache } from '../../../utils/cache.ts'
 
-interface IAccount {
-  name: string
-  password: string
-}
+const CACHE_NAME = 'name'
+const CACHE_PASSWORD = 'password'
 
 const account = reactive<IAccount>({
-  name: '',
-  password: ''
+  name: localCache.getCache(CACHE_NAME) ?? '',
+  password: localCache.getCache(CACHE_PASSWORD) ?? ''
 })
 
 const accountRules: FormRules = {
@@ -57,12 +56,20 @@ const accountRules: FormRules = {
 
 const formRef = ref<InstanceType<typeof ElForm>>()
 const loginStore = useLoginStore()
-function loginAction() {
+function loginAction(isRememberPassword: boolean) {
   formRef.value?.validate((valid) => {
     if (valid) {
       const name = account.name
       const password = account.password
-      loginStore.loginAccountAction({ name, password })
+      loginStore.loginAccountAction({ name, password }).then((res) => {
+        if (isRememberPassword) {
+          localCache.setCache(CACHE_NAME, name)
+          localCache.setCache(CACHE_PASSWORD, password)
+        } else {
+          localCache.removeCache(CACHE_NAME)
+          localCache.removeCache(CACHE_PASSWORD)
+        }
+      })
     } else {
       ElMessage.error('Oops,请输入正确账号信息或密码')
     }
